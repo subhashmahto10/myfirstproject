@@ -30,6 +30,22 @@
 				<version>${mule.maven.plugin.version}</version>
 				<extensions>true</extensions>
 				<configuration>
+				    <cloudHubDeployment>
+				      <uri>https://anypoint.mulesoft.com</uri>
+				      <muleVersion>4.4.0</muleVersion>
+				      <username>${anypointusername}</username>
+				      <password>${anypointpassword}</password>
+				      <applicationName>${project.artifactId}</applicationName>
+				      <environment>Dev</environment>
+				      <region>us-east-2</region>
+				      <workers>1</workers>
+				      <workerType>MICRO</workerType>
+				      <objectStoreV2>true</objectStoreV2>
+				      <properties>
+				       <http.port>${http.port}</http.port>
+				      <mule.env>Dev</mule.env>
+				      </properties>
+				    </cloudHubDeployment>
 					<sharedLibraries>
 						<sharedLibrary>
 							<groupId>mysql</groupId>
@@ -61,11 +77,6 @@
 			<classifier>mule-plugin</classifier>
 		</dependency>
 		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>8.0.30</version>
-		</dependency>
-		<dependency>
 			<groupId>org.mule.modules</groupId>
 			<artifactId>mule-apikit-module</artifactId>
 			<version>1.12.2</version>
@@ -82,6 +93,11 @@
 			<artifactId>mule-email-connector</artifactId>
 			<version>1.8.0</version>
 			<classifier>mule-plugin</classifier>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>8.0.30</version>
 		</dependency>
 	</dependencies>
 
