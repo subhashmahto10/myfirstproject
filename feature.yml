@@ -3,7 +3,7 @@ name: MuleSoft CI/CD Pipeline
 on:
   push:
     branches:
-      - feature_release1
+      - feature_release_1
 
   workflow_dispatch:
 
