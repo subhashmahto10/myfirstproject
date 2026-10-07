@@ -36,7 +36,7 @@
 				      <username>${anypointusername}</username>
 				      <password>${anypointpassword}</password>
 				      <applicationName>${project.artifactId}</applicationName>
-				      <environment>Dev</environment>
+				      <environment>Sandbox</environment>
 				      <region>us-east-2</region>
 				      <workers>1</workers>
 				      <workerType>MICRO</workerType>
@@ -46,6 +46,7 @@
 				      <mule.env>Dev</mule.env>
 				      </properties>
 				    </cloudHubDeployment>
+
 					<sharedLibraries>
 						<sharedLibrary>
 							<groupId>mysql</groupId>
