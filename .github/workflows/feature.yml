@@ -1,4 +1,4 @@
-name: MuleSoft CI/CD Pipeline
+name: MuleSoft CI/CD Pipelinee
 
 on:
   push:
