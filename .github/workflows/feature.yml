@@ -3,7 +3,7 @@ name: MuleSoft CI/CD Pipeline
 on:
   push:
     branches:
-      - feature_release1
+      - feature_release_1
 
   workflow_dispatch:
 
@@ -28,7 +28,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: '11'
+          java-version: '17'
           cache: maven
 
 
