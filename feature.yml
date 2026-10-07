@@ -1,0 +1,74 @@
+name: MuleSoft CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - feature_release1
+
+  workflow_dispatch:
+
+jobs:
+  build-test-deploy:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      # --------------------------------------------------
+      # 1. Checkout source code
+      # --------------------------------------------------
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+
+      # --------------------------------------------------
+      # 2. Setup Java 11
+      # --------------------------------------------------
+      - name: Setup Java 11
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '11'
+          cache: maven
+
+
+      # --------------------------------------------------
+      # 3. Verify Java and Maven
+      # --------------------------------------------------
+      - name: Verify Java and Maven
+        run: |
+          java -version
+          mvn -version
+
+
+      # --------------------------------------------------
+      # 4. Build MuleSoft application
+      # --------------------------------------------------
+      - name: Maven Build
+        run: |
+          mvn clean package \
+            -DskipTests \
+            -B \
+            -e
+
+
+      # --------------------------------------------------
+      # 5. Run MuleSoft/Maven tests
+      # --------------------------------------------------
+      - name: Maven Test
+        run: |
+          mvn test \
+            -B
+
+
+      # --------------------------------------------------
+      # 6. Deploy MuleSoft application to Anypoint
+      # --------------------------------------------------
+      - name: Deploy to Anypoint Platform
+        run: |
+          mvn deploy \
+            -DskipTests \
+            -DmuleDeploy \
+            -Danypointusername="${{ secrets.ANYPOINT_USER }}" \
+            -Danypointpassword="${{ secrets.ANYPOINT_PWD }}" \
+            -B
