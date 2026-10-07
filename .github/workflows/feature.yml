@@ -4,71 +4,33 @@ on:
   push:
     branches:
       - feature_release_1
-
   workflow_dispatch:
 
 jobs:
   build-test-deploy:
-
     runs-on: ubuntu-latest
-
     steps:
-
-      # --------------------------------------------------
-      # 1. Checkout source code
-      # --------------------------------------------------
       - name: Checkout source code
         uses: actions/checkout@v4
 
-
-      # --------------------------------------------------
-      # 2. Setup Java 11
-      # --------------------------------------------------
-      - name: Setup Java 11
+      - name: Setup Java 17 + Exchange login
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '17'
           cache: maven
+          server-id: anypoint-exchange-v3
+          server-username: ANYPOINT_USER
+          server-password: ANYPOINT_PWD
 
-
-      # --------------------------------------------------
-      # 3. Verify Java and Maven
-      # --------------------------------------------------
-      - name: Verify Java and Maven
-        run: |
-          java -version
-          mvn -version
-
-
-      # --------------------------------------------------
-      # 4. Build MuleSoft application
-      # --------------------------------------------------
       - name: Maven Build
-        run: |
-          mvn clean package \
-            -DskipTests \
-            -B \
-            -e
+        run: mvn clean package -DskipTests -B
 
-
-      # --------------------------------------------------
-      # 5. Run MuleSoft/Maven tests
-      # --------------------------------------------------
-      - name: Maven Test
-        run: |
-          mvn test \
-            -B
-
-
-      # --------------------------------------------------
-      # 6. Deploy MuleSoft application to Anypoint
-      # --------------------------------------------------
-      - name: Deploy to Anypoint Platform
-        run: |
-          mvn deploy \
-            -DskipTests \
-            -DmuleDeploy \
-            -Danypointusername="${{ secrets.ANYPOINT_USER }}" \
-            -Danypointpassword="${{ secrets.ANYPOINT_PWD }}" \
-            -B
+      - name: Publish to Exchange and deploy to CloudHub 2.0
+        env:
+          ANYPOINT_USER: ${{ secrets.ANYPOINT_USER }}
+          ANYPOINT_PWD: ${{ secrets.ANYPOINT_PWD }}
+        run: >
+          mvn deploy -DskipTests -DmuleDeploy -B
+          -Danypointusername="$ANYPOINT_USER"
+          -Danypointpassword="$ANYPOINT_PWD"
