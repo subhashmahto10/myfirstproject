@@ -26,7 +26,13 @@ jobs:
       - name: Maven Build
         run: mvn clean package -DskipTests -B
 
-      - name: Publish to Exchange and deploy to CloudHub 2.0
+      - name: Publish to Exchange
+        env:
+          ANYPOINT_USER: ${{ secrets.ANYPOINT_USER }}
+          ANYPOINT_PWD: ${{ secrets.ANYPOINT_PWD }}
+        run: mvn deploy -DskipTests -B
+
+      - name: Deploy to CloudHub 2.0
         env:
           ANYPOINT_USER: ${{ secrets.ANYPOINT_USER }}
           ANYPOINT_PWD: ${{ secrets.ANYPOINT_PWD }}
