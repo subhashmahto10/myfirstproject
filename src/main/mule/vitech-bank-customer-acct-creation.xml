@@ -5,7 +5,7 @@ http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/cu
 http://www.mulesoft.org/schema/mule/email http://www.mulesoft.org/schema/mule/email/current/mule-email.xsd">
     <apikit:config name="vitech-bank-customer-acct-creation-config" api="vitech-bank-customer-acct-creation.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
     <db:config name="Database_Config1" doc:name="Database Config" doc:id="fbade62c-4be6-47e7-bf9c-23375eee9268" >
-		<db:my-sql-connection host="localhost" port="3306" user="root" password="Subhash@12312" database="Mulesoft" />
+		<db:my-sql-connection host="mysql-1f899d7-subhash8official-00aa.l.aivencloud.com" port="19964" user="avnadmin" password="AVNS_oW_Mse7Kr2jfdDoqWwa" database="myFirstProject" />
 	</db:config>
 	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="b2f83e83-97fc-447d-947f-c459cb9d7fbc" >
 		<http:listener-connection host="0.0.0.0" port="8081" />
