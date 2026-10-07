@@ -1,4 +1,4 @@
-name: MuleSoft CI/CD Pipelinee
+name: MuleSoft CI/CD Pipeline
 
 on:
   push:
@@ -22,6 +22,9 @@ jobs:
           server-id: anypoint-exchange-v3
           server-username: ANYPOINT_USER
           server-password: ANYPOINT_PWD
+
+      - name: Set unique version
+        run: mvn -B versions:set -DnewVersion=1.0.${{ github.run_number }} -DgenerateBackupPoms=false
 
       - name: Maven Build
         run: mvn clean package -DskipTests -B
