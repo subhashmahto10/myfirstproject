@@ -138,7 +138,8 @@ output application/json
         </error-handler>
     </flow>
 	<flow name="post:\createAccounts:application\json:vitech-bank-customer-acct-creation-config">
-        <set-variable value="#[attributes.queryParams.CustomerName]" doc:name="Set CustomerName" doc:id="ffe53026-c435-4a6e-ae55-e7c92468dfad" variableName="CustomerName"/>
+        <set-variable value="#[payload.mailId]" doc:name="Set Variable" doc:id="31c04b5f-4716-4892-9018-cb40f740500f" variableName="gmail"/>
+		<set-variable value="#[attributes.queryParams.CustomerName]" doc:name="Set CustomerName" doc:id="ffe53026-c435-4a6e-ae55-e7c92468dfad" variableName="CustomerName"/>
 		<set-variable value="#[attributes.queryParams.Bank]" doc:name="Bank" doc:id="d05b026c-7da4-46f2-a60a-b8f0716f5907" variableName="Bank"/>
 		<set-variable value='#[attributes.queryParams."Type"]' doc:name="Type" doc:id="76d3fd19-3917-490b-acb0-c150f89b70cb" variableName="Type"/>
 		<set-variable value="#[attributes.queryParams.Branchname]" doc:name="Set Branchname" doc:id="300d3ad6-efa9-4bee-a7a7-feae9f94d9f4" variableName="Branchname"/>
@@ -205,9 +206,19 @@ output application/json
     </flow>
 	<flow name="vitech-bank-customer-acct-gmail" doc:id="a45f8913-4d9d-44c7-aec2-e803e711cff8" >
 		<logger level="INFO" doc:name="Logger" doc:id="3ed28393-7499-43ff-8d9b-991f80312a55" message="-----------------Before Sending Email----------------"/>
+		<ee:transform doc:name="Transform Message" doc:id="deda7db4-a32b-4dda-a8d2-7ce416a127bc" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
 		<email:send doc:name="Send" doc:id="4e47513e-9722-4a90-86b5-e258ab7a1fea" config-ref="Email_SMTP" fromAddress="subhashmahto1029@gmail.com" subject="Chal beta Email bhi aa gya - Account created">
 			<email:to-addresses >
-				<email:to-address value="subhash8official@gmail.com" />
+				<email:to-address value="#[vars.gmail]" />
 			</email:to-addresses>
 			<email:body >
 				<email:content ><![CDATA[#["Ha ye body hai"]]]></email:content>
