@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<types:mule xmlns:types="http://www.mulesoft.org/schema/mule/types">
+  <types:catalog>
+    <types:type name="requestdata" format="json">
+      <types:shape format="weave" example="examples/example.json"><![CDATA[%dw 2.0
+
+type requestdata = {|
+  empid: Number {"typeId": "int"}, 
+  empname: String, 
+  dept: String, 
+  salary: Number {"typeId": "int"}
+|} {"example": "{\\\"empid\\\":1112,\\\"empname\\\":\\\"Sanjita\\\",\\\"dept\\\":\\\"AI\\\",\\\"salary\\\":50000}"}
+
+]]></types:shape>
+    </types:type>
+  </types:catalog>
+</types:mule>
